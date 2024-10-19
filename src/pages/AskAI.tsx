@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { MessageCircle, Send } from 'lucide-react';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import ReactMarkdown from 'react-markdown';
 
 const AskAI: React.FC = () => {
   const [question, setQuestion] = useState('');
@@ -17,7 +18,7 @@ const AskAI: React.FC = () => {
       }
 
       const genAI = new GoogleGenerativeAI(apiKey);
-      const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
       const prompt = `Meyve bilgi merkezi için bir asistan olarak davran. Şu soruyu cevapla: ${question}`;
       const result = await model.generateContent(prompt);
@@ -60,7 +61,9 @@ const AskAI: React.FC = () => {
             <MessageCircle size={24} className="mr-2 text-green-500" />
             Yapay Zeka Yanıtı
           </h2>
-          <p className="whitespace-pre-wrap">{answer}</p>
+          <ReactMarkdown className="whitespace-pre-wrap">
+            {answer}
+          </ReactMarkdown>
         </div>
       )}
     </div>
